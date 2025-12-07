@@ -14,6 +14,7 @@ const QuranExplorer = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [filterType, setFilterType] = useState('all'); // all, mecca, medina, juz
   const [selectedJuz, setSelectedJuz] = useState(1);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [view, setView] = useState('home');
   const audioRef = useRef(null);
 
@@ -40,6 +41,20 @@ const QuranExplorer = () => {
       }
     };
     fetchSurahs();
+  }, []);
+
+  // Handle scroll to show/hide scroll-to-top button
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 300) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Fetch surah data when selected
@@ -160,6 +175,10 @@ const QuranExplorer = () => {
   const goBackToSurah = () => {
     setView('surah');
     setSelectedVerse(null);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -574,6 +593,19 @@ const QuranExplorer = () => {
           </div>
         )}
       </main>
+
+      {/* Scroll to Top Button */}
+      {showScrollTop && (
+        <button
+          onClick={scrollToTop}
+          className="scroll-to-top"
+          aria-label="Scroll to top"
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M5 15l7-7 7 7" />
+          </svg>
+        </button>
+      )}
 
       {/* Footer */}
       <footer className="footer">
