@@ -9,16 +9,18 @@ A beautiful Quran reading application built with React, using the Quran.Foundati
 ## ✨ Features
 
 - 📜 **Browse All 114 Surahs** - Beautiful grid with Arabic names, English translations, and verse counts
-- 🔍 **Search Functionality** - Filter surahs by name (English/Arabic) or number
-- 📖 **Read Full Surahs** - Arabic text with English translations
-- 🔎 **Individual Verse View** - Detailed view with verse information
+- 🔍 **Advanced Filtering** - Search by name/number, filter by Mecca/Medina, or browse by Juz (1-30)
+- 🌓 **Dark/Light Theme** - Toggle between dark and light modes with theme persistence
+- 📖 **Read Full Surahs** - Arabic text with diacritical marks and English translations
+- 🔎 **Individual Verse View** - Detailed view with verse information and metadata
 - 🎧 **Audio Recitation** - 4 renowned reciters:
   - Mishary Rashid Al Afasy
   - Abu Bakr Al Shatri
   - Nasser Al Qatami
   - Yasser Al Dosari
 - ▶️ **Play per Verse or Full Surah** - Listen to individual verses or complete chapters
-- 📱 **Fully Responsive** - Works on desktop, tablet, and mobile
+- 📱 **Fully Responsive** - Works seamlessly on desktop, tablet, and mobile
+- ⬆️ **Smooth Navigation** - Scroll-to-top button and intuitive page transitions
 
 ## 🚀 Getting Started
 
@@ -93,17 +95,18 @@ This app uses the free [Quran API](https://quranapi.pages.dev) from Quran.Founda
 
 | Endpoint | Description |
 |----------|-------------|
-| `GET /api/chapters.json` | List all 114 surahs |
+| `GET /api/surah.json` | List all 114 surahs |
 | `GET /api/{surahNo}.json` | Get full surah with verses |
 | `GET /api/{surahNo}/{ayahNo}.json` | Get specific verse details |
 
-The API is free, requires no authentication, and has no rate limits.
+Audio files are served from The Quran Project repository. The API is free, requires no authentication, and has no rate limits.
 
 ## 🎨 Design Features
 
-- **Luxurious dark theme** with emerald and amber accents
+- **Dual theme system** - Dark mode with emerald/amber accents and clean light mode
+- **Theme persistence** - Your preference is saved in localStorage
 - **Beautiful Arabic typography** using the Amiri font
-- **Subtle animations** and hover effects
+- **Smooth animations** and transitions
 - **Gradient backgrounds** with decorative blur elements
 - **Glass-morphism effects** with backdrop blur
 - **Responsive layout** for all screen sizes
