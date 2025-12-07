@@ -12,6 +12,8 @@ const QuranExplorer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentAudioUrl, setCurrentAudioUrl] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [filterType, setFilterType] = useState('all'); // all, mecca, medina, juz
+  const [selectedJuz, setSelectedJuz] = useState(1);
   const [view, setView] = useState('home');
   const audioRef = useRef(null);
 
@@ -102,12 +104,37 @@ const QuranExplorer = () => {
     }
   };
 
-  // Filter surahs based on search
-  const filteredSurahs = surahs.filter(surah =>
-    surah.surahName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    surah.surahNameArabic?.includes(searchQuery) ||
-    surah.surahNo?.toString().includes(searchQuery)
-  );
+  // Juz mapping - which surahs belong to which Juz
+  const juzMapping = {
+    1: [1, 2], 2: [2], 3: [2, 3], 4: [3, 4], 5: [4], 6: [4, 5], 7: [5, 6],
+    8: [6, 7], 9: [7, 8], 10: [8, 9], 11: [9, 10, 11], 12: [11, 12],
+    13: [12, 13, 14, 15], 14: [15, 16], 15: [17, 18], 16: [18, 19, 20],
+    17: [21, 22], 18: [23, 24, 25], 19: [25, 26, 27], 20: [27, 28, 29],
+    21: [29, 30, 31, 32, 33], 22: [33, 34, 35, 36], 23: [36, 37, 38, 39],
+    24: [39, 40, 41], 25: [41, 42, 43, 44, 45], 26: [46, 47, 48, 49, 50, 51],
+    27: [51, 52, 53, 54, 55, 56, 57], 28: [58, 59, 60, 61, 62, 63, 64, 65, 66],
+    29: [67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77], 30: [78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114]
+  };
+
+  // Filter surahs based on search and filters
+  const filteredSurahs = surahs.filter(surah => {
+    // Search filter
+    const matchesSearch = searchQuery === '' ||
+      surah.surahName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      surah.surahNameArabic?.includes(searchQuery) ||
+      surah.surahNo?.toString().includes(searchQuery);
+
+    if (!matchesSearch) return false;
+
+    // Revelation place filter
+    if (filterType === 'mecca' && surah.revelationPlace !== 'Mecca') return false;
+    if (filterType === 'medina' && surah.revelationPlace !== 'Madina') return false;
+
+    // Juz filter
+    if (filterType === 'juz' && !juzMapping[selectedJuz]?.includes(surah.surahNo)) return false;
+
+    return true;
+  });
 
   // Reciters available
   const reciters = [
@@ -227,6 +254,52 @@ const QuranExplorer = () => {
                   />
                 </div>
               </div>
+
+              {/* Filter Buttons */}
+              <div className="filter-container">
+                <button
+                  onClick={() => setFilterType('all')}
+                  className={`filter-button ${filterType === 'all' ? 'active' : ''}`}
+                >
+                  All Surahs
+                </button>
+                <button
+                  onClick={() => setFilterType('mecca')}
+                  className={`filter-button ${filterType === 'mecca' ? 'active' : ''}`}
+                >
+                  Meccan
+                </button>
+                <button
+                  onClick={() => setFilterType('medina')}
+                  className={`filter-button ${filterType === 'medina' ? 'active' : ''}`}
+                >
+                  Medinan
+                </button>
+                <button
+                  onClick={() => setFilterType('juz')}
+                  className={`filter-button ${filterType === 'juz' ? 'active' : ''}`}
+                >
+                  By Juz
+                </button>
+              </div>
+
+              {/* Juz Selector */}
+              {filterType === 'juz' && (
+                <div className="juz-selector">
+                  <label>Select Juz:</label>
+                  <select
+                    value={selectedJuz}
+                    onChange={(e) => setSelectedJuz(Number(e.target.value))}
+                    className="juz-select"
+                  >
+                    {[...Array(30)].map((_, i) => (
+                      <option key={i + 1} value={i + 1}>
+                        Juz {i + 1}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
 
             {/* Quick Stats */}
@@ -244,6 +317,17 @@ const QuranExplorer = () => {
                 </div>
               ))}
             </div>
+
+            {/* Filter Info */}
+            {filterType !== 'all' && (
+              <div className="filter-info">
+                <p>
+                  {filterType === 'mecca' && `Showing ${filteredSurahs.length} Meccan surahs`}
+                  {filterType === 'medina' && `Showing ${filteredSurahs.length} Medinan surahs`}
+                  {filterType === 'juz' && `Showing ${filteredSurahs.length} surahs in Juz ${selectedJuz}`}
+                </p>
+              </div>
+            )}
 
             {/* Surah Grid */}
             <div className="surah-grid">

@@ -238,6 +238,90 @@
   margin: 2rem auto 0;
 }
 
+/* Filter Buttons */
+.filter-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin: 1.5rem auto 0;
+  max-width: 40rem;
+}
+
+.filter-button {
+  padding: 0.625rem 1.25rem;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s;
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+}
+
+.filter-button:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.filter-button.active {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.2));
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.2);
+}
+
+/* Juz Selector */
+.juz-selector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem auto 0;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 20rem;
+}
+
+.juz-selector label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.juz-select {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 100px;
+}
+
+.juz-select:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.juz-select:focus {
+  outline: none;
+  border-color: rgba(16, 185, 129, 0.5);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.juz-select option {
+  background: #1a1f35;
+  color: #ffffff;
+}
+
 .search-wrapper {
   position: relative;
 }
@@ -270,6 +354,27 @@
 .search-input:focus {
   border-color: rgba(16, 185, 129, 0.5);
   background: rgba(255, 255, 255, 0.1);
+}
+
+/* Filter Info */
+.filter-info {
+  text-align: center;
+  margin: 1.5rem 0 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  width: fit-content;
+}
+
+.filter-info p {
+  color: #34d399;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin: 0;
 }
 
 /* Stats Grid */
@@ -882,24 +987,43 @@
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .surah-title {
     font-size: 1.75rem;
   }
-  
+
   .surah-title-arabic {
     font-size: 1.75rem;
   }
-  
+
   .verse-view-card {
     padding: 1.5rem;
   }
-  
+
   .verse-view-arabic {
     font-size: 1.75rem;
   }
-  
+
   .verse-view-translation {
     font-size: 1rem;
+  }
+
+  .filter-container {
+    gap: 0.5rem;
+  }
+
+  .filter-button {
+    padding: 0.5rem 1rem;
+    font-size: 0.8125rem;
+  }
+
+  .juz-selector {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .filter-info {
+    margin-left: 1rem;
+    margin-right: 1rem;
   }
 }
