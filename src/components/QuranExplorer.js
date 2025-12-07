@@ -181,7 +181,9 @@ const QuranExplorer = () => {
         }}
         onPause={() => setIsPlaying(false)}
         onPlay={() => setIsPlaying(true)}
-      />
+      >
+        <track kind="captions" />
+      </audio>
 
       {/* Header */}
       <header className="header">
@@ -286,13 +288,14 @@ const QuranExplorer = () => {
               {/* Juz Selector */}
               {filterType === 'juz' && (
                 <div className="juz-selector">
-                  <label>Select Juz:</label>
+                  <label htmlFor="juz-select">Select Juz:</label>
                   <select
+                    id="juz-select"
                     value={selectedJuz}
                     onChange={(e) => setSelectedJuz(Number(e.target.value))}
                     className="juz-select"
                   >
-                    {[...Array(30)].map((_, i) => (
+                    {Array.from({ length: 30 }, (_, i) => (
                       <option key={i + 1} value={i + 1}>
                         Juz {i + 1}
                       </option>
@@ -396,7 +399,7 @@ const QuranExplorer = () => {
               </div>
 
               {/* Play Full Surah */}
-              {surahData.audio && surahData.audio[currentReciter] && (
+              {surahData.audio?.[currentReciter] && (
                 <button
                   onClick={() => playAudio(surahData.audio[currentReciter].url)}
                   className="play-surah-button"
@@ -436,8 +439,8 @@ const QuranExplorer = () => {
                 const verseAudioUrl = `https://the-quran-project.github.io/Quran-Audio/Data/${currentReciter}/${surahData.surahNo}_${ayahNo}.mp3`;
 
                 return (
-                  <div
-                    key={index}
+                  <button
+                    key={ayahNo}
                     onClick={() => fetchVerse(surahData.surahNo, ayahNo)}
                     className="verse-card"
                   >
@@ -449,7 +452,7 @@ const QuranExplorer = () => {
                         <p className="verse-arabic" dir="rtl">
                           {arabicText} ۝
                         </p>
-                        {surahData.translation && surahData.translation[index] && (
+                        {surahData.translation?.[index] && (
                           <p className="verse-translation">
                             {surahData.translation[index]}
                           </p>
@@ -495,7 +498,7 @@ const QuranExplorer = () => {
                         Details
                       </button>
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -529,7 +532,7 @@ const QuranExplorer = () => {
               <div className="verse-view-audio">
                 <span className="audio-label">Listen:</span>
                 <div className="audio-buttons">
-                  {selectedVerse.audio && Object.entries(selectedVerse.audio).slice(0, 4).map(([id, audio]) => {
+                  {selectedVerse.audio ? Object.entries(selectedVerse.audio).slice(0, 4).map(([id, audio]) => {
                     const isThisAudioPlaying = isPlaying && currentAudioUrl === audio.url;
                     return (
                       <button
@@ -542,7 +545,7 @@ const QuranExplorer = () => {
                         {audio.reciter?.split(' ').slice(-2).join(' ')}
                       </button>
                     );
-                  })}
+                  }) : null}
                 </div>
               </div>
             </div>
